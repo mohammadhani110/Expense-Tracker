@@ -18,3 +18,7 @@ export const calcBalance=(transactions,setTotal)=>{
      setTotal(allTotal)
     }
 }
+
+export const clearFeilds=()=>{
+
+}

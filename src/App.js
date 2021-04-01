@@ -10,7 +10,7 @@ import { AddTransaction } from "./components/AddTransaction";
 
 function App() {
   const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState(null);
+  const [amount, setAmount] = useState(0);
   const [type, setType] = useState("");
   const [transactions, setTransactions] = useState([]);
   const [total, setTotal] = useState(0);
@@ -24,12 +24,14 @@ function App() {
 
   const handleAddition = (e) => {
     e.preventDefault();
-    if (title !== "" && amount !== "" && type !== "") {
+    if (title !== "" && amount !== 0 && type !== "") {
       const id = Math.floor(Math.random() * 1000000 + 1);
       setTransactions((item) => [
         ...item,
         { title, amount: Number(amount), type, id },
       ]);
+      clearFeilds();
+
     }
     return;
   };
@@ -38,6 +40,16 @@ function App() {
     const filteredArr = transactions.filter((item) => item.id !== id);
     setTransactions(filteredArr);
   };
+  const handleRadio = (el)=>{
+    setType(el.value)
+  }
+  const clearFeilds=()=>{
+    let radioEl= document.querySelector(`${"#"+type}`);
+    radioEl.checked=false;
+    setTitle("");
+    setAmount(0);
+    setType("");
+  }
 
   return (
     <div className="App">
@@ -54,7 +66,8 @@ function App() {
               transactions={transactions}
             />
             <AddTransaction
-              onChange={{ setTitle, setAmount, setType }}
+              onChange={{ setTitle, setAmount, handleRadio }}
+              fields={{ title, amount, type }}
               onAddItem={handleAddition}
             />
           </div>{/*end-col-6*/}
