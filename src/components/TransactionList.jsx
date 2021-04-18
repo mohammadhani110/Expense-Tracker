@@ -1,12 +1,16 @@
-import { Transaction } from "./Transaction";
+import React, { useContext } from "react";
 
-export const TransactionList = ({ transactions, onDelete }) => {
+import { Transaction } from "./Transaction";
+import { GlobalContext } from "../context/GlobalState";
+
+export const TransactionList = () => {
+  const { transactions } = useContext(GlobalContext);
   return (
     <>
       <h3>History</h3>
       <ul id="list" className="list">
-        {transactions.map((item) => (
-          <Transaction item={item} key={item.id} onDelete={onDelete}/>
+        {transactions.map((transaction) => (
+          <Transaction transaction={transaction} key={transaction.id} />
         ))}
       </ul>
     </>
